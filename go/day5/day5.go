@@ -42,17 +42,6 @@ func readFileToSlice(fileName string) (lines []string) {
 	return
 }
 
-type req struct {
-	byr string
-	iyr string
-	eyr string
-	hgt string
-	hcl string
-	ecl string
-	pid string
-	cid string
-}
-
 func day5a(entries []string) (seatID int) {
 
 	for _, boardingPass := range entries {

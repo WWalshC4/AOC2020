@@ -42,17 +42,6 @@ func readFileToSlice(fileName string) (lines []string) {
 	return
 }
 
-type req struct {
-	byr string
-	iyr string
-	eyr string
-	hgt string
-	hcl string
-	ecl string
-	pid string
-	cid string
-}
-
 func day4a(entries string) (validPassports int64) {
 	r := regexp.MustCompile(`(\S+)(\s+)`)
 	kv := regexp.MustCompile(`(...):(.+)`)
