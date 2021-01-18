@@ -41,17 +41,83 @@ func readFileToSlice(fileName string) (lines []string) {
 }
 
 func day6a(entries []string) (count int) {
+	groupAnswers := make([]map[rune]bool, 0)
+
+	currentGroup := make(map[rune]bool)
+	groupAnswers = append(groupAnswers, currentGroup)
+
+	for _, answer := range entries {
+		if answer == "" {
+			currentGroup = make(map[rune]bool)
+			groupAnswers = append(groupAnswers, currentGroup)
+		} else {
+			for _, question := range answer {
+				currentGroup[question] = true
+			}
+		}
+	}
+
+	for _, groupAnswer := range groupAnswers {
+		for _, answer := range groupAnswer {
+			if answer == true {
+				count++
+			}
+		}
+	}
+
 	return
 }
 
 func day6b(entries []string) (count int) {
+
+	currentGroup := make(map[rune]bool)
+	for c := 'a'; c <= 'z'; c++ {
+		currentGroup[c] = true
+	}
+
+	groupAnswers := make([]map[rune]bool, 0)
+	groupAnswers = append(groupAnswers, currentGroup)
+
+	for _, answer := range entries {
+		if answer == "" {
+			currentGroup = make(map[rune]bool)
+			for c := 'a'; c <= 'z'; c++ {
+				currentGroup[c] = true
+			}
+
+			groupAnswers = append(groupAnswers, currentGroup)
+			continue
+		}
+		currentPerson := make(map[rune]bool)
+		for _, question := range answer {
+			currentPerson[question] = true
+		}
+
+		for question, answer := range currentGroup {
+			if answer == true {
+				if currentPerson[question] != true {
+					currentGroup[question] = false
+				}
+			}
+		}
+
+	}
+
+	for _, groupAnswer := range groupAnswers {
+		for _, answer := range groupAnswer {
+			if answer == true {
+				count++
+			}
+		}
+	}
+
 	return
 }
 
 func main() {
-	entries := readFileToSlice("./day5_input.txt")
+	entries := readFileToSlice("./day6_input.txt")
 
-	fmt.Println(day6a(entries)) //919
-	fmt.Println(day6b(entries)) //642
+	fmt.Println(day6a(entries)) //6714
+	fmt.Println(day6b(entries)) //3435
 
 }
